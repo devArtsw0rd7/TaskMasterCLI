@@ -1,6 +1,7 @@
-import pytest, datetime
+import pytest
 from main import TaskManager
 from utils import parse_task_entry
+import datetime  # Add this import
 
 # Helper function to setup TaskManager
 def create_task_manager():
@@ -43,13 +44,13 @@ def test_add_task_with_specific_date():
     assert task['priority'] == 'm'
     assert task['due_date'] == datetime.date(2024, 6, 23)
 
-def test_invalid_priority(self):
+def test_invalid_priority():
     manager = create_task_manager()
     task_entry = "Clean the house -p x"
     task = parse_task_entry(task_entry)
     assert task is None
 
-def test_invalid_date_format(self):
+def test_invalid_date_format():
     manager = create_task_manager()
     task_entry = "Gym session -d 2024-23-06"
     task = parse_task_entry(task_entry)
@@ -64,7 +65,7 @@ def test_default_priority_is_medium():
     assert task['priority'] == 'm'
     assert task['due_date'] is None
 
-def test_due_date_keyword_today(self):
+def test_due_date_keyword_today():
     manager = create_task_manager()
     task_entry = "Team meeting -d t"
     task = parse_task_entry(task_entry)
