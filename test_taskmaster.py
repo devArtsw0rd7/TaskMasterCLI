@@ -1,7 +1,8 @@
 import pytest
-from main import TaskManager
+from task_manager import TaskManager
 from utils import parse_task_entry
-import datetime  # Add this import
+import datetime
+from unittest.mock import patch
 
 # Helper function to setup TaskManager
 def create_task_manager():
@@ -74,12 +75,14 @@ def test_due_date_keyword_today():
     assert task['priority'] == 'm'
     assert task['due_date'] == datetime.date.today()
 
-def test_program_exit_on_q_command():
+@patch('builtins.input', side_effect=['q'])
+def test_program_exit_on_q_command(mock_input):
     manager = create_task_manager()
-    result = manager.run(['q'])
+    result = manager.run()
     assert result is None  # Assuming 'q' exits the program cleanly
 
-def test_start_prioritization_on_p_command():
+@patch('builtins.input', side_effect=['p'])
+def test_start_prioritization_on_p_command(mock_input):
     manager = create_task_manager()
-    result = manager.run(['p'])
+    result = manager.run()
     assert result == 'Begin prioritization selections'
